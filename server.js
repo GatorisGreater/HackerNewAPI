@@ -17,18 +17,14 @@ app.use(bodyParser.json());
 
 app.get('/stories', (req, res) => {
   HackerStory
-    .find({})
+    .find()
     .sort({votes: -1})
     .limit(20)
     .exec()
     .then(HackerStorys => {
-      res.status(200).json(HackerStorys.map((HackerStory) => HackerStory.apiRepr())
-      );
+      res.status(200).json({HackerStory: HackerStorys.map((HackerStory) => HackerStory.apiRepr())
+      });
     })
-    .catch(
-        err => {
-          console.error(err);
-    });
 });
 
 
