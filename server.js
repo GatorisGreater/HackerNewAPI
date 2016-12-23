@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const {HackerStory} = require('./models');
+const HackerStory = require('./models');
 
 mongoose.Promise = global.Promise;
 
@@ -13,19 +13,32 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 app.use(bodyParser.json());
 
+
+HackerStory.find().then(function(data){
+  console.log('Outer Find',data);
+});
+
 // API endpoints go here
 
-app.get('/stories', (req, res) => {
+app.get('/story', function(req, res){
+  HackerStory.find().then(function(data){
+    res.json(data);
+  });
+});
+
+app.get('/stories', function(req, res) {
   HackerStory
     .find()
     .sort({votes: -1})
     .limit(20)
     .exec()
-    .then(HackerStorys => {
-      res.status(200).json({HackerStory: HackerStorys.map((HackerStory) => HackerStory.apiRepr())
-      });
-    })
-});
+    .then(function(data) {
+      res.json(data);
+    //  console.log(HackerStorys);
+    //  res.status(200).json({HackerStory: HackerStorys.map((HackerStory) => HackerStory.apiRepr())
+    //  });
+    });
+  });
 
 
 

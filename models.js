@@ -17,6 +17,6 @@ hackerStorySchema.methods.apiRepr = function() {
 	};
 }
 
-const HackerStory = mongoose.model('HackerStory', hackerStorySchema);
+const HackerStory = mongoose.model('hackerstorys', hackerStorySchema);
 
-module.exports = {HackerStory};
+module.exports = HackerStory;
